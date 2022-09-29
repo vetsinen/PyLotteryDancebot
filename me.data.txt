@@ -1,0 +1,40 @@
+Signed in successfully as Vitaliy Grum
+User(
+	id=1782304682,
+	is_self=True,
+	contact=False,
+	mutual_contact=False,
+	deleted=False,
+	bot=False,
+	bot_chat_history=False,
+	bot_nochats=False,
+	verified=False,
+	restricted=False,
+	min=False,
+	bot_inline_geo=False,
+	support=False,
+	scam=False,
+	apply_min_photo=True,
+	fake=False,
+	access_hash=-1452825351571789405,
+	first_name='Vitaliy',
+	last_name='Grum',
+	username='only_human5',
+	phone='380933526809',
+	photo=UserProfilePhoto(
+		photo_id=5253685704381283970,
+		dc_id=2,
+		has_video=False,
+		stripped_thumb=b"\x01\x08\x08b^\x03'8\xeb\xc5\x14QJ\xc3?"
+	),
+	status=UserStatusOnline(
+		expires=datetime.datetime(2022, 9, 29, 14, 25, 23, tzinfo=datetime.timezone.utc)
+	),
+	bot_info_version=None,
+	restriction_reason=[
+	],
+	bot_inline_placeholder=None,
+	lang_code=None
+)
+only_human5
+380933526809

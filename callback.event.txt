@@ -1,0 +1,26 @@
+CallbackQuery.Event(
+	original_update=UpdateBotCallbackQuery(
+		query_id=7821867566265867006,
+		user_id=1821170460,
+		peer=PeerChannel(
+			channel_id=1866935354
+		),
+		msg_id=13,
+		chat_instance=8433566345390963654,
+		data=b'\xd1\x85\xd0\xbe\xd1\x87\xd1\x83 \xd0\xb1\xd0\xb5\xd0\xb7\xd0\xba\xd0\xbe\xd1\x88\xd1\x82\xd0\xbe\xd1\x82\xd0\xbe\xd0\xb2\xd0\xbd\xd0\xb8\xd0\xb9 \xd0\xb2\xd1\x85\xd1\x96\xd0\xb4',
+		game_short_name=None
+	),
+	query=UpdateBotCallbackQuery(
+		query_id=7821867566265867006,
+		user_id=1821170460,
+		peer=PeerChannel(
+			channel_id=1866935354
+		),
+		msg_id=13,
+		chat_instance=8433566345390963654,
+		data=b'\xd1\x85\xd0\xbe\xd1\x87\xd1\x83 \xd0\xb1\xd0\xb5\xd0\xb7\xd0\xba\xd0\xbe\xd1\x88\xd1\x82\xd0\xbe\xd1\x82\xd0\xbe\xd0\xb2\xd0\xbd\xd0\xb8\xd0\xb9 \xd0\xb2\xd1\x85\xd1\x96\xd0\xb4',
+		game_short_name=None
+	),
+	data_match=None,
+	pattern_match=None
+)
