@@ -21,7 +21,7 @@ async def sendButtons():
 для участі натисніть кнопку під текстом
 результати розіграшу будуть опубліковані після 17:00, переможець чи переможниця має підтвердити свою участь написавши ім"я і фамілію в особисті @helvetian"""
     await client.send_message(chat, invitation, buttons=[[
-        Button.inline("хочу безкоштотовний вхід"),
+        Button.inline("хочу безкоштовний вхід"),
     ]])
 
 @client.on(events.NewMessage)
@@ -50,6 +50,7 @@ async def click_handler(event):
                               f'user {user.first_name} {user.last_name} - @{user.username}, {event.query.user_id}')
 
 
+print('launching pyTgLotterybot')
 loop = asyncio.get_event_loop()
 # loop.run_until_complete(sendButtons())
 client.add_event_handler(click_handler)
