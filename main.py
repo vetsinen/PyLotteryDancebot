@@ -14,7 +14,6 @@ chat = 'wilddances'
 client = TelegramClient('bot_SESSION_NAME', api_id, api_hash)
 client.start(bot_token='5616779070:AAFNDOX-H8v9Po_mmdaHWwGfv3ApwoOwjSs')
 
-
 # function that sends the message
 async def sendButtons():
     invitation = """
@@ -25,6 +24,16 @@ async def sendButtons():
         Button.inline("хочу безкоштотовний вхід"),
     ]])
 
+@client.on(events.NewMessage)
+async def any_message_arrived_handler(event):
+    print('We are handling message events')
+    await client.send_message('@helvetian','some command')
+    # print(event.stringify())
+    command = event.original_update.message.message
+    print(command)
+    if command=='/publish':
+        print('lets start')
+        await sendButtons()
 
 # CallBackQuery event handler that gets triggered every time a user click a Button.inline
 @events.register(events.CallbackQuery(chats=[chat]))
@@ -42,6 +51,7 @@ async def click_handler(event):
 
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(sendButtons())
+# loop.run_until_complete(sendButtons())
 client.add_event_handler(click_handler)
+
 loop.run_forever()
