@@ -1,64 +1,47 @@
+import asyncio
 from telethon import TelegramClient
+from telethon import functions, types, events
+from telethon.tl.custom import Button
+from telethon.tl.functions.users import GetFullUserRequest
 
-# Remember to use your own values from my.telegram.org!
 api_id = 14535551
 api_hash = 'ee049ec9130de53ec5336fe819e49365'
-client = TelegramClient('anon', api_id, api_hash)
 
-async def main():
-    # Getting information about yourself
-    me = await client.get_me()
+wild_dances_channel_id = -1001866935354
+chat = 'wilddances'
 
-    # "me" is a user object. You can pretty-print
-    # any Telegram object with the "stringify" method:
-    # print(me.stringify())
+# start the bot client
+client = TelegramClient('bot_SESSION_NAME', api_id, api_hash)
+client.start(bot_token='5616779070:AAFNDOX-H8v9Po_mmdaHWwGfv3ApwoOwjSs')
 
-    # When you print something, you see a representation of it.
-    # You can access all attributes of Telegram objects with
-    # # the dot operator. For example, to get the username:
-    # username = me.username
-    # print(username)
-    # print(me.phone)
 
-    # # You can print all the dialogs/conversations that you are part of:
-    # async for dialog in client.iter_dialogs():
-    #     print(dialog.name, 'has ID', dialog.id)
+# function that sends the message
+async def sendButtons():
+    invitation = """
+ підписники каналу "танцювальний дайджест" можуть виграти безкоштовний вхід на вечірку [just dance](https://fb.me/e/3vR7Ff2O7)
+для участі натисніть кнопку під текстом
+результати розіграшу будуть опубліковані після 17:00, переможець чи переможниця має підтвердити свою участь написавши ім"я і фамілію в особисті @helvetian"""
+    await client.send_message(chat, invitation, buttons=[[
+        Button.inline("хочу безкоштотовний вхід"),
+    ]])
 
-    # You can send messages to yourself...
-    # await client.send_message('me', 'Hello, myself!')
-    # # ...to some chat ID
-    await client.send_message(-1001866935354, 'boommmm!  a [nice website](https://example.com)!')
-    # # ...to your contacts
-    # await client.send_message('+34600123123', 'Hello, friend!')
-    # # ...or even to any username
-    # await client.send_message('username', 'Testing Telethon!')
-    #
-    # # You can, of course, use markdown in your messages:
-    # message = await client.send_message(
-    #     'me',
-    #     'This message has **bold**, `code`, __italics__ and '
-    #     'a [nice website](https://example.com)!',
-    #     link_preview=False
-    # )
-    #
-    # # Sending a message returns the sent message object, which you can use
-    # print(message.raw_text)
-    #
-    # # You can reply to messages directly if you have a message object
-    # await message.reply('Cool!')
-    #
-    # # Or send files, songs, documents, albums...
-    # await client.send_file('me', '/home/me/Pictures/holidays.jpg')
-    #
-    # # You can print the message history of any chat:
-    # async for message in client.iter_messages('me'):
-    #     print(message.id, message.text)
-    #
-    #     # You can download media from messages, too!
-    #     # The method will return the path where the file was saved.
-    #     if message.photo:
-    #         path = await message.download_media()
-    #         print('File saved to', path)  # printed after download is done
 
-with client:
-    client.loop.run_until_complete(main())
+# CallBackQuery event handler that gets triggered every time a user click a Button.inline
+@events.register(events.CallbackQuery(chats=[chat]))
+async def click_handler(event):
+    # print((event.stringify())) # event contains the user choice   - <class 'telethon.events.callbackquery.CallbackQuery.Event'>
+    print(event.query.user_id)
+    full = await client(GetFullUserRequest(event.query.user_id))
+    user = full.user
+    # print(full.user)
+    # UserFull(user=User(id=1821170460, is_self=False, contact=False, mutual_contact=False, deleted=False, bot=False, bot_chat_history=False, bot_nochats=False, verified=False, restricted=False, min=False, bot_inline_geo=False, support=False, scam=False, apply_min_photo=True, fake=False, access_hash=8720590546679958276, first_name='Vitaliy', last_name='Gusak', username='harley_baldwin', phone=None, photo=UserProfilePhoto(photo_id=5269460968935636318, dc_id=2, has_video=False, stripped_thumb=None), status=UserStatusRecently(), bot_info_version=None, restriction_reason=[], bot_inline_placeholder=None, lang_code=None), settings=PeerSettings(report_spam=False, add_contact=False, block_contact=False, share_contact=False, need_contacts_exception=False, report_geo=False, autoarchived=False, invite_members=False, geo_distance=None), notify_settings=PeerNotifySettings(show_previews=True, silent=False, mute_until=datetime.datetime(1970, 1, 1, 0, 0, tzinfo=datetime.timezone.utc), sound='default'), common_chats_count=0, blocked=False, phone_calls_available=True, phone_calls_private=False, can_pin_message=True, has_scheduled=False, video_calls_available=True, about=None, profile_photo=Photo(id=5269460968935636318, access_hash=-4898392480451631249, file_reference=b"\x00c6\x03\x1c\xb1'\x0bu\xc96\xcd\xe99\xe2\xcc\x83R\xd9EZ", date=datetime.datetime(2022, 9, 15, 14, 2, 20, tzinfo=datetime.timezone.utc), sizes=[PhotoSize(type='a', w=160, h=160, size=10783), PhotoSize(type='b', w=320, h=320, size=38311), PhotoSize(type='c', w=640, h=640, size=134636)], dc_id=2, has_stickers=False, video_sizes=[]), bot_info=None, pinned_msg_id=None, folder_id=None, ttl_period=None, theme_emoticon=None)
+    print(user.first_name, user.last_name, user.username)
+
+    await client.send_message('helvetian',
+                              f'user {user.first_name} {user.last_name} - @{user.username}, {event.query.user_id}')
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(sendButtons())
+client.add_event_handler(click_handler)
+loop.run_forever()
