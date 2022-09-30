@@ -2,6 +2,8 @@ import asyncio
 from telethon import TelegramClient, events
 from telethon.tl.custom import Button
 from telethon.tl.functions.users import GetFullUserRequest
+import logging
+
 
 api_id = 14535551
 api_hash = 'ee049ec9130de53ec5336fe819e49365'
@@ -29,7 +31,7 @@ async def any_message_arrived_handler(event):
     await client.send_message('@helvetian','some command')
     # print(event.stringify())
     command = event.original_update.message.message
-    print(command)
+    logging.info(command)
     if command=='/publish':
         print('lets start')
         await sendButtons()
@@ -40,7 +42,7 @@ async def any_message_arrived_handler(event):
 @events.register(events.CallbackQuery(chats=[chat]))
 async def click_handler(event):
     # print((event.stringify())) # event contains the user choice   - <class 'telethon.events.callbackquery.CallbackQuery.Event'>
-    print('userid ',event.query.user_id)
+    logging.info('userid ',event.query.user_id)
     full = await client(GetFullUserRequest(event.query.user_id))
     user = full.user
     print(full.user.stringify())
@@ -53,7 +55,7 @@ async def click_handler(event):
 
 print('launching pyTgLotterybot')
 loop = asyncio.get_event_loop()
-# loop.run_until_complete(sendButtons())
+loop.run_until_complete(sendButtons())
 # client.add_event_handler(click_handler)
 
 loop.run_forever()
