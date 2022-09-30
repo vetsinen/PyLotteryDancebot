@@ -44,9 +44,11 @@ async def click_handler(event):
     # print((event.stringify())) # event contains the user choice   - <class 'telethon.events.callbackquery.CallbackQuery.Event'>
     print('userid ',event.query.user_id)
     full = await client(GetFullUserRequest(event.query.user_id))
-    print(full.stringify())
-    await client.send_message('helvetian', full.stringify())
-    await client.send_message('helvetian', full.users[0].first_name)
+    # print(full.stringify())
+    # await client.send_message('helvetian', full.stringify())
+    user = full.users[0]
+    # await client.send_message('helvetian', full.users[0].first_name)
+    await client.send_message('helvetian', f'user {user.first_name} {user.last_name} - @{user.username}, {event.query.user_id}')
 
 
     # print(user.first_name, user.last_name, user.username)
