@@ -9,7 +9,7 @@ api_id = 14535551
 api_hash = 'ee049ec9130de53ec5336fe819e49365'
 
 wild_dances_channel_id = -1001866935354
-chat = 'wilddances'
+chat = 'openairskyiv'
 
 # start the bot client
 client = TelegramClient('bot_SESSION_NAME', api_id, api_hash)
@@ -58,7 +58,7 @@ async def click_handler(event):
 
 print('launching pyTgLotterybot')
 loop = asyncio.get_event_loop()
-loop.run_until_complete(sendButtons())
+# loop.run_until_complete(sendButtons())
 # client.add_event_handler(click_handler)
 
 loop.run_forever()
