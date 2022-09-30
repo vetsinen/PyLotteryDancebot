@@ -34,7 +34,7 @@ async def any_message_arrived_handler(event):
     if command=='/publish':
         print('lets start')
         await sendButtons()
-        await client.add_event_handler(click_handler)
+        client.add_event_handler(click_handler)
 
 
 # CallBackQuery event handler that gets triggered every time a user click a Button.inline
