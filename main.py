@@ -34,6 +34,8 @@ async def any_message_arrived_handler(event):
     if command=='/publish':
         print('lets start')
         await sendButtons()
+        await client.add_event_handler(click_handler)
+
 
 # CallBackQuery event handler that gets triggered every time a user click a Button.inline
 @events.register(events.CallbackQuery(chats=[chat]))
@@ -53,6 +55,6 @@ async def click_handler(event):
 print('launching pyTgLotterybot')
 loop = asyncio.get_event_loop()
 # loop.run_until_complete(sendButtons())
-client.add_event_handler(click_handler)
+# client.add_event_handler(click_handler)
 
 loop.run_forever()
