@@ -9,7 +9,7 @@ api_id = 14535551
 api_hash = 'ee049ec9130de53ec5336fe819e49365'
 
 wild_dances_channel_id = -1001866935354
-chat = 'openairskyiv'
+chat = 'wilddances'
 
 # start the bot client
 client = TelegramClient('bot_SESSION_NAME', api_id, api_hash)
