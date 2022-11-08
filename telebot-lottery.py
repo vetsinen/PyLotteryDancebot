@@ -5,29 +5,28 @@ import pickle
 bot = TeleBot("5616779070:AAFNDOX-H8v9Po_mmdaHWwGfv3ApwoOwjSs",
               parse_mode=None)  # You can set parse_mode by default. HTML or MARKDOWN
 wild_dances_channel_id = -1001866935354
+social_dances_id = -1001287171602
+instant_notify = False
 
-datafile = "participants.pickle"
+datafile = "participants-2s2b.pickle"
 if path.exists(datafile):
     with open(datafile, 'rb') as f:
         participants = pickle.load(f)
 else:
     participants = []
 
-text = 'Запрошуємо вас взяти участь в розіграші безкоштовного входу '
-'на бачакіз вечірку в середу, '
-'для цього клацніть на кнопку нижче'
-' щоб виграти вхід на двох після натискання кнопки, '
-'напишіть як звати партнера чи партнерку'
-' боту @PyLotteryDancebot'
-
-dummy = 'вигравайте безкоштовну подорож центром Києва на 3 жовтня'
+text = 'Для підписників каналу розігрується безкоштовний вхід для танцювальної пари на вечірку в середу в SkyLoft, ' \
+       'для того, щоб скористатись виграшем пара має прийти на вечірку до 19:15' \
+       '. Розіграш буде проведено в середу, учасник пари що виграє має підтвердити участь, інакше може бути проведений повторний розіграш. ' \
+       ' Розіграш відбудеться якщо зареєструються від 20 учасників '
+button_text = 'Хочу безкоштовний вхід в середу'
 
 @bot.message_handler(commands=['publish'])
 def send_lottery(message):
-    button_bar = types.InlineKeyboardButton('Хочу безкоштовний вхід', callback_data='bachakizz')
+    button_bar = types.InlineKeyboardButton(button_text, callback_data='free')
     keyboard = types.InlineKeyboardMarkup()
     keyboard.add(button_bar)
-    bot.send_message(wild_dances_channel_id, text=dummy,
+    bot.send_message(wild_dances_channel_id, text=text,
     reply_markup = keyboard)
 
     @bot.message_handler(commands=['start'])
@@ -40,11 +39,12 @@ def send_lottery(message):
 
     @bot.callback_query_handler(func=lambda call: True)
     def callback_query(call):
-        if call.data == 'bachakizz':
+        if call.data == 'free':
             user = call.from_user
             participant = {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name,
                            'username': user.username}
             print(participant)
+
             if participant not in participants:  # TODO: change to user.id checking
                 participants.append(participant)
                 with open(datafile, 'wb') as f:
@@ -56,3 +56,4 @@ def send_lottery(message):
         print(participants)
 
 bot.infinity_polling()
+
